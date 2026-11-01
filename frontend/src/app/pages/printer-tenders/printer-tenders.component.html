@@ -1,0 +1,61 @@
+<div class="tenders-page">
+  <div class="page-heading">
+    <div>
+      <h2>Otvorene licitacije</h2>
+      <p>Jedna štamparija može poslati jednu ukupnu ponudu po javnoj nabavci.</p>
+    </div>
+    <button (click)="loadTenders()">Osveži</button>
+  </div>
+
+  @if (tenders.length == 0) {
+    <p>Trenutno nema otvorenih javnih nabavki.</p>
+  } @else {
+    @for (tender of tenders; track tender._id) {
+      <section class="tender-card">
+        <div class="tender-heading">
+          <div>
+            <h3>{{ tender.tenderCode }}</h3>
+            <p><strong>Ustanova:</strong> {{ tender.companyName }}</p>
+            <small>Raspisano: {{ tender.createdAt | date:'dd.MM.yyyy. HH:mm:ss' }}</small>
+          </div>
+          <div class="timer">Preostalo: {{ remainingTime(tender) }}</div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Proizvod</th>
+              <th>Količina</th>
+              <th>Boja</th>
+              <th>Štampa</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of tender.items; track item) {
+              <tr>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.color }}</td>
+                <td>{{ item.serviceType || 'Bez dodatne štampe' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        @if (hasBid(tender)) {
+          <p class="sent">Ponuda ove štamparije je poslata.</p>
+        } @else {
+          <div class="bid-form">
+            <label [for]="'amount-' + tender._id">Ukupan iznos ponude (RSD)</label>
+            <input [id]="'amount-' + tender._id" type="number" min="1"
+              [(ngModel)]="bidAmounts[tender._id]">
+            <button (click)="submitBid(tender)">Pošalji ponudu</button>
+          </div>
+        }
+      </section>
+    }
+  }
+
+  <a routerLink="/printer">Nazad</a>
+  <p class="message">{{ message }}</p>
+</div>

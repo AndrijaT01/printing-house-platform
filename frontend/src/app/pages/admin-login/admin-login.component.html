@@ -1,0 +1,16 @@
+<div class="card">
+  <h2>Prijava administratora</h2>
+
+  <div class="form-row">
+    <label for="username">Korisničko ime</label>
+    <input id="username" type="text" [(ngModel)]="username">
+  </div>
+
+  <div class="form-row">
+    <label for="password">Lozinka</label>
+    <input id="password" type="password" [(ngModel)]="password">
+  </div>
+
+  <button (click)="login()">Prijavi se</button>
+  <p class="message">{{ message }}</p>
+</div>

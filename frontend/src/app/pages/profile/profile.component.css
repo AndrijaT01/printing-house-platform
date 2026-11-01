@@ -1,0 +1,61 @@
+.card {
+  max-width: 820px;
+}
+
+.orders-card {
+  max-width: 1000px;
+  margin: 28px auto 0;
+  padding: 24px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.cancel-button {
+  background: #a43b3b;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 22px;
+}
+
+.profile-image, .default-image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.default-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dbe5ec;
+  color: #17324d;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.back-link {
+  margin-left: 16px;
+}
+
+@media (max-width: 650px) {
+  .two-columns {
+    grid-template-columns: 1fr;
+  }
+}

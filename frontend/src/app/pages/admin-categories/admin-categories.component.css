@@ -1,0 +1,33 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forms-grid, .category-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.forms-grid .card {
+  width: 100%;
+  margin: 0;
+}
+
+.category-list {
+  margin-top: 28px;
+}
+
+.category-list article {
+  padding: 18px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+@media (max-width: 700px) {
+  .forms-grid, .category-list {
+    grid-template-columns: 1fr;
+  }
+}

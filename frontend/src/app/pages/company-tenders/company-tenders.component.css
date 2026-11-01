@@ -1,0 +1,53 @@
+.tenders-page {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.page-heading, .tender-heading, .page-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.tender-card {
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.tender-card h3 {
+  margin-bottom: 4px;
+}
+
+.status-box {
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #e2eaf0;
+  text-align: right;
+}
+
+.winner {
+  background: #e3f4e8;
+}
+
+.winner-text {
+  padding: 12px;
+  background: #e3f4e8;
+}
+
+.page-actions {
+  justify-content: flex-start;
+}
+
+@media print {
+  .no-print, header, footer {
+    display: none !important;
+  }
+
+  .tender-card {
+    break-inside: avoid;
+  }
+}

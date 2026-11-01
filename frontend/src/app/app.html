@@ -1,0 +1,26 @@
+<header>
+  <div class="header-content">
+    <a routerLink="/" class="logo">{{ title }}</a>
+    <nav>
+      <a routerLink="/">Početna</a>
+      @if (currentUser != null) {
+        <span class="logged-user">
+          Prijavljen: <strong>{{ currentUser!.username }}</strong>
+          ({{ roleName(currentUser!.role) }})
+        </span>
+        <a [routerLink]="dashboardLink()">Moj nalog</a>
+        <button class="header-logout" (click)="logout()">Odjava</button>
+      } @else {
+        <a routerLink="/register">Registracija</a>
+      }
+    </nav>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  Printing House · PIA projekat 2025/26
+</footer>

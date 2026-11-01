@@ -1,0 +1,71 @@
+@if (!found) {
+  <p>Proizvod nije pronađen.</p>
+} @else {
+  <div class="card prepare-card">
+    <h2>Priprema proizvoda</h2>
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p><strong>Štamparija:</strong> {{ product.printerName }}, {{ product.city }}</p>
+    <p><strong>Osnovna cena:</strong> {{ product.unitPrice }} RSD</p>
+    <p><strong>Na lageru:</strong> {{ product.stock }}</p>
+
+    <div class="product-preview">
+      @if (product.image.startsWith('data:image')) {
+        <img class="base-image" [src]="product.image" [alt]="product.name">
+      } @else {
+        <div class="preview-placeholder">Nema osnovne slike proizvoda</div>
+      }
+      @if (printImage != '') {
+        <img class="print-image-overlay" [src]="printImage" alt="Slika za štampu">
+      }
+      @if (printText != '') {
+        <div class="print-text-overlay">{{ printText }}</div>
+      }
+    </div>
+    <p class="preview-note">Pregled položaja štampe je ilustrativan.</p>
+
+    <div class="form-row">
+      <label for="color">Boja proizvoda</label>
+      <select id="color" [(ngModel)]="selectedColor">
+        @for (color of product.colors; track color) {
+          <option [value]="color">{{ color }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="service">Usluga štampe</label>
+      <select id="service" [(ngModel)]="selectedService">
+        <option value="">Bez dodatne štampe</option>
+        @for (service of product.services; track service.serviceId) {
+          <option [value]="service.type">
+            {{ service.type }} (+{{ service.additionalPrice }} RSD po komadu)
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="printText">Tekst za štampu</label>
+      <textarea id="printText" [(ngModel)]="printText" rows="3"
+        placeholder="Opciono"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label for="printImage">Sličica za štampu</label>
+      <input id="printImage" type="file" accept="image/jpeg,image/png,image/gif"
+        (change)="printImageSelected($event)">
+    </div>
+
+    <div class="form-row">
+      <label for="quantity">Količina</label>
+      <input id="quantity" type="number" min="1" [max]="product.stock" [(ngModel)]="quantity">
+    </div>
+
+    <p class="total"><strong>Ukupno: {{ totalPrice() }} RSD</strong></p>
+    <button (click)="addToCart()">Dodaj u korpu</button>
+    <button class="secondary-button" (click)="resetPreparation()">Poništi</button>
+    <a class="back-link" [routerLink]="['/product', product._id]">Nazad</a>
+    <p class="message">{{ message }}</p>
+  </div>
+}

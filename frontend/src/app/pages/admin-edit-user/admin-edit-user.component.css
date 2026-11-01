@@ -1,0 +1,19 @@
+.card {
+  max-width: 820px;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 22px;
+}
+
+.back-link {
+  margin-left: 16px;
+}
+
+@media (max-width: 650px) {
+  .two-columns {
+    grid-template-columns: 1fr;
+  }
+}

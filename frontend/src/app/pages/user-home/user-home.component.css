@@ -1,0 +1,13 @@
+.card {
+  max-width: 650px;
+}
+
+.profile-link {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 10px 18px;
+  border-radius: 4px;
+  background: #e2eaf0;
+  color: #17324d;
+  text-decoration: none;
+}

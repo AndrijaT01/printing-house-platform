@@ -1,0 +1,42 @@
+.tenders-page {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.page-heading, .tender-heading, .bid-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.tender-card {
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.timer, .sent {
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #e2eaf0;
+  font-weight: bold;
+}
+
+.bid-form {
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.bid-form input {
+  max-width: 200px;
+}
+
+@media (max-width: 650px) {
+  .page-heading, .tender-heading, .bid-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

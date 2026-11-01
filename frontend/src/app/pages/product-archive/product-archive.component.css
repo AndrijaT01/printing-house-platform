@@ -1,0 +1,96 @@
+.archive-page {
+  max-width: 900px;
+  margin: auto;
+}
+
+.page-heading, .product-data, .rating-actions, .comment-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.sort-box {
+  min-width: 220px;
+}
+
+.order-group {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.order-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.order-heading h3, .order-heading p {
+  margin-top: 0;
+}
+
+.products-list {
+  margin-top: 20px;
+}
+
+.archive-card {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid #e1e6ea;
+  border-radius: 6px;
+  background: #f9fbfc;
+}
+
+.archive-card h3 {
+  margin-top: 0;
+}
+
+.status {
+  padding: 7px 12px;
+  border-radius: 14px;
+  background: #e2eaf0;
+  font-weight: bold;
+}
+
+.rating-actions {
+  justify-content: flex-start;
+  margin: 16px 0;
+}
+
+.like-button, .dislike-button {
+  background: #687581;
+  opacity: 0.8;
+}
+
+.selected-like {
+  background: #218838;
+  opacity: 1;
+  box-shadow: 0 0 0 3px #bfe4c7;
+}
+
+.selected-dislike {
+  background: #b33434;
+  opacity: 1;
+  box-shadow: 0 0 0 3px #efc3c3;
+}
+
+.delivery-note {
+  padding: 10px;
+  border-left: 4px solid #d39b2c;
+  background: #fff6df;
+}
+
+.comment-form textarea {
+  flex: 1;
+}
+
+@media (max-width: 650px) {
+  .page-heading, .product-data, .comment-form, .order-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

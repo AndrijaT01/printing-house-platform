@@ -1,0 +1,80 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-form {
+  max-width: none;
+  margin: 0;
+}
+
+.import-card {
+  max-width: none;
+  margin: 0 0 24px;
+}
+
+.import-card input {
+  margin-bottom: 14px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 22px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  border: 1px solid #aeb8c2;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.service-form {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.services-table {
+  margin-top: 16px;
+}
+
+.save-product {
+  margin-top: 20px;
+}
+
+.stock-input {
+  min-width: 90px;
+}
+
+.notice {
+  padding: 18px;
+  border: 1px solid #d5a22f;
+  border-radius: 6px;
+  background: #fff7df;
+}
+
+@media (max-width: 900px) {
+  .service-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .form-grid, .service-form {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}

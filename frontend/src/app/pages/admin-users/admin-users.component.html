@@ -1,0 +1,78 @@
+<div class="page-heading">
+  <div>
+    <h2>Zahtevi za registraciju</h2>
+    <p>Prihvatanje i odbijanje novih korisnika.</p>
+  </div>
+  <div>
+    <a class="categories-link" routerLink="/admin/categories">Kategorije</a>
+    <button (click)="logout()">Izloguj se</button>
+  </div>
+</div>
+
+<p class="message success">{{ message }}</p>
+
+@if (pendingUsers.length == 0) {
+  <p>Trenutno nema zahteva na čekanju.</p>
+} @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Korisničko ime</th>
+        <th>Ime i prezime</th>
+        <th>Email</th>
+        <th>Tip</th>
+        <th>Institucija</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of pendingUsers; track user._id) {
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.companyName || '-' }}</td>
+          <td class="actions">
+            <button (click)="changeStatus(user, 'active')">Prihvati</button>
+            <button class="danger" (click)="changeStatus(user, 'rejected')">Odbij</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+<h2 class="users-title">Svi korisnički nalozi</h2>
+
+@if (users.length == 0) {
+  <p>Nema korisničkih naloga.</p>
+} @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Korisničko ime</th>
+        <th>Ime i prezime</th>
+        <th>Email</th>
+        <th>Tip</th>
+        <th>Status</th>
+        <th>Akcije</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user._id) {
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.status }}</td>
+          <td class="actions">
+            <a [routerLink]="['/admin/edit-user', user._id]" class="edit-link">Izmeni</a>
+            <button class="danger" (click)="deleteUser(user)">Obriši</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

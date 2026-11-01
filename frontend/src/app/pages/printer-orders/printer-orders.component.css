@@ -1,0 +1,26 @@
+.orders-page {
+  max-width: 900px;
+  margin: auto;
+}
+
+.order-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+}
+
+.order-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.status {
+  height: fit-content;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #e2eaf0;
+  font-weight: bold;
+}

@@ -1,0 +1,84 @@
+<div class="tenders-page">
+  <div class="page-heading no-print">
+    <div>
+      <h2>Javne nabavke</h2>
+      <p>Istekle nabavke zaključavaju se prilikom otvaranja ili osvežavanja ove stranice.</p>
+    </div>
+    <button (click)="loadTenders()">Proveri i osveži</button>
+  </div>
+
+  @if (tenders.length == 0) {
+    <p>Još nema raspisanih javnih nabavki.</p>
+  } @else {
+    @for (tender of tenders; track tender._id) {
+      <section class="tender-card">
+        <div class="tender-heading">
+          <div>
+            <h3>{{ tender.tenderCode }}</h3>
+            <small>Otvorena: {{ tender.createdAt | date:'dd.MM.yyyy. HH:mm:ss' }}</small><br>
+            <small>Ističe: {{ tender.expiresAt | date:'dd.MM.yyyy. HH:mm:ss' }}</small>
+          </div>
+          <div class="status-box">
+            <strong>{{ statusName(tender.status) }}</strong>
+            @if (tender.status == 'open') {
+              <div>Preostalo: {{ remainingTime(tender) }}</div>
+            }
+          </div>
+        </div>
+
+        <h4>Traženi proizvodi</h4>
+        <ol>
+          @for (item of tender.items; track item) {
+            <li>
+              {{ item.productName }} — {{ item.quantity }} kom, {{ item.color }}
+              @if (item.serviceType != '') { · {{ item.serviceType }} }
+            </li>
+          }
+        </ol>
+
+        <h4>Pristigle ponude</h4>
+        @if (tender.bids.length == 0) {
+          <p>Nema pristiglih ponuda.</p>
+        } @else {
+          <table>
+            <thead>
+              <tr>
+                <th>Štamparija</th>
+                <th>Vreme ponude</th>
+                <th>Ukupan iznos</th>
+                <th>Rezultat</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (bid of tender.bids; track bid.printerId) {
+                <tr [class.winner]="tender.winnerPrinterId == bid.printerId">
+                  <td>{{ bid.printerName }}</td>
+                  <td>{{ bid.offeredAt | date:'dd.MM.yyyy. HH:mm:ss' }}</td>
+                  <td>{{ bid.totalAmount }} RSD</td>
+                  <td>
+                    @if (tender.winnerPrinterId == bid.printerId) {
+                      Pobednička ponuda
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        @if (tender.status == 'finished') {
+          <p class="winner-text">
+            Izabrana je štamparija <strong>{{ tender.winnerPrinterName }}</strong>,
+            sa ponudom od <strong>{{ tender.winningAmount }} RSD</strong>.
+          </p>
+        }
+      </section>
+    }
+  }
+
+  <div class="page-actions no-print">
+    <button (click)="printReport()">Štampaj / sačuvaj PDF izveštaj</button>
+    <a routerLink="/client">Nazad</a>
+  </div>
+  <p class="message">{{ message }}</p>
+</div>

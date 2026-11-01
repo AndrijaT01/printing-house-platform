@@ -1,0 +1,44 @@
+import { Routes } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { UserHomeComponent } from './pages/user-home/user-home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminEditUserComponent } from './pages/admin-edit-user/admin-edit-user.component';
+import { AdminCategoriesComponent } from './pages/admin-categories/admin-categories.component';
+import { PrinterProductsComponent } from './pages/printer-products/printer-products.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { PrepareProductComponent } from './pages/prepare-product/prepare-product.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { PrinterOrdersComponent } from './pages/printer-orders/printer-orders.component';
+import { CompanyTendersComponent } from './pages/company-tenders/company-tenders.component';
+import { PrinterTendersComponent } from './pages/printer-tenders/printer-tenders.component';
+import { ProductArchiveComponent } from './pages/product-archive/product-archive.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+
+export const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
+  { path: 'admin-login', component: AdminLoginComponent },
+  { path: 'admin/users', component: AdminUsersComponent },
+  { path: 'admin/edit-user/:id', component: AdminEditUserComponent },
+  { path: 'admin/categories', component: AdminCategoriesComponent },
+  { path: 'client', component: UserHomeComponent },
+  { path: 'printer', component: UserHomeComponent },
+  { path: 'printer/products', component: PrinterProductsComponent },
+  { path: 'printer/orders', component: PrinterOrdersComponent },
+  { path: 'printer/tenders', component: PrinterTendersComponent },
+  { path: 'company/tenders', component: CompanyTendersComponent },
+  { path: 'client/archive', component: ProductArchiveComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'prepare-product/:id', component: PrepareProductComponent },
+  { path: 'cart', component: CartComponent },
+  { path: '**', redirectTo: '' }
+];

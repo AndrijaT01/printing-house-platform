@@ -1,0 +1,22 @@
+<div class="card">
+  <h2>Dobro došli, {{ user.firstName }} {{ user.lastName }}</h2>
+  <p>Uspešno ste prijavljeni kao: <strong>{{ roleName() }}</strong>.</p>
+  @if (user.role == 'printer') {
+    <p>Ovde možeš upravljati proizvodima i pratiti primljene porudžbine.</p>
+  } @else {
+    <p>Proizvode možeš pronaći pretragom na javnoj početnoj stranici.</p>
+  }
+  <a routerLink="/profile" class="profile-link">Moj profil</a>
+  @if (user.role == 'printer') {
+    <a routerLink="/printer/products" class="profile-link">Proizvodi i usluge</a>
+    <a routerLink="/printer/orders" class="profile-link">Porudžbine</a>
+    <a routerLink="/printer/tenders" class="profile-link">Licitacije</a>
+  } @else {
+    <a routerLink="/cart" class="profile-link">Korpa</a>
+    <a routerLink="/client/archive" class="profile-link">Arhiva proizvoda</a>
+    @if (user.role == 'company') {
+      <a routerLink="/company/tenders" class="profile-link">Javne nabavke</a>
+    }
+  }
+  <button (click)="logout()">Izloguj se</button>
+</div>

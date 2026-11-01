@@ -1,0 +1,137 @@
+<div class="card">
+  <h2>Moj profil</h2>
+
+  @if (user.profileImage.startsWith('data:image')) {
+    <img class="profile-image" [src]="user.profileImage" alt="Profilna slika">
+  } @else {
+    <div class="default-image">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</div>
+  }
+
+  <div class="two-columns">
+    <div class="form-row">
+      <label for="username">Korisničko ime</label>
+      <input id="username" type="text" [(ngModel)]="user.username" disabled>
+    </div>
+
+    <div class="form-row">
+      <label for="email">Email</label>
+      <input id="email" type="email" [(ngModel)]="user.email">
+    </div>
+
+    <div class="form-row">
+      <label for="firstName">Ime / odgovorno lice</label>
+      <input id="firstName" type="text" [(ngModel)]="user.firstName">
+    </div>
+
+    <div class="form-row">
+      <label for="lastName">Prezime / odgovorno lice</label>
+      <input id="lastName" type="text" [(ngModel)]="user.lastName">
+    </div>
+
+    <div class="form-row">
+      <label for="phone">Telefon</label>
+      <input id="phone" type="text" [(ngModel)]="user.phone">
+    </div>
+
+    <div class="form-row">
+      <label for="image">Nova profilna slika</label>
+      <input id="image" type="file" accept="image/jpeg,image/png,image/gif" (change)="imageSelected($event)">
+    </div>
+  </div>
+
+  @if (user.role == 'company' || user.role == 'printer') {
+    <h3>Podaci o instituciji</h3>
+
+    <div class="two-columns">
+      <div class="form-row">
+        <label for="companyName">Naziv institucije</label>
+        <input id="companyName" type="text" [(ngModel)]="user.companyName">
+      </div>
+
+      <div class="form-row">
+        <label for="city">Grad</label>
+        <input id="city" type="text" [(ngModel)]="user.city">
+      </div>
+
+      <div class="form-row">
+        <label for="address">Adresa</label>
+        <input id="address" type="text" [(ngModel)]="user.address">
+      </div>
+
+      <div class="form-row">
+        <label for="registrationNumber">Matični broj</label>
+        <input id="registrationNumber" type="text" [(ngModel)]="user.registrationNumber">
+      </div>
+
+      <div class="form-row">
+        <label for="taxNumber">PIB</label>
+        <input id="taxNumber" type="text" [(ngModel)]="user.taxNumber">
+      </div>
+    </div>
+  }
+
+  <button (click)="updateProfile()">Sačuvaj izmene</button>
+  <a class="back-link" routerLink="/change-password">Promeni lozinku</a>
+  <a class="back-link" [routerLink]="user.role == 'printer' ? '/printer' : '/client'">Nazad</a>
+
+  <p class="message" [class.success]="updateSuccessful">{{ message }}</p>
+</div>
+
+@if (user.role == 'person' || user.role == 'company') {
+  <div class="orders-card">
+    <div class="orders-heading">
+      <h2>Moje porudžbine</h2>
+      <div>
+        <label for="orderSort">Sortiranje </label>
+        <select id="orderSort" [(ngModel)]="orderSort">
+          <option value="date">Datum</option>
+          <option value="printer">Štamparija</option>
+          <option value="amount">Iznos</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+    </div>
+
+    @if (orders.length == 0) {
+      <p>Još nema porudžbina.</p>
+    } @else {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Račun</th>
+              <th>Štamparija</th>
+              <th>Stavke</th>
+              <th>Ukupno</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of sortedOrders(); track order._id) {
+              <tr>
+                <td>{{ order.invoiceId }}</td>
+                <td>{{ order.printerName }}<br>{{ order.city }}</td>
+                <td>
+                  @for (item of order.items; track item.productId) {
+                    <div>{{ item.productName }} × {{ item.quantity }}</div>
+                  }
+                </td>
+                <td>{{ order.totalAmount }} RSD</td>
+                <td>{{ statusName(order.status) }}</td>
+                <td>
+                  @if (order.status == 'delivered') {
+                    <button (click)="confirmReceived(order)">Potvrdi prijem</button>
+                  }
+                  @if (order.status == 'ordered') {
+                    <button class="cancel-button" (click)="cancelOrder(order)">Otkaži</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

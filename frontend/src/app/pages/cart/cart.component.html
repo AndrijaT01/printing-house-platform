@@ -1,0 +1,72 @@
+<div class="cart-page">
+  <h2>Korpa</h2>
+
+  @if (items.length == 0) {
+    <p>Korpa je prazna.</p>
+  } @else {
+    @if (user.role == 'company') {
+      <p class="company-notice">
+        Potvrdom se ne kreira račun, već javna nabavka koja traje 10 minuta.
+        Sve štamparije mogu poslati po jednu ponudu.
+      </p>
+    }
+
+    @for (group of groups(); track group.printerId) {
+      <section class="printer-group">
+        <h3>{{ group.printerName }} — {{ group.city }}</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Proizvod</th>
+              <th>Boja i štampa</th>
+              <th>Količina</th>
+              <th>Cena</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of group.items; track item) {
+              <tr>
+                <td>{{ item.productName }}</td>
+                <td>
+                  {{ item.color }}
+                  @if (item.serviceType != '') {
+                    <br>{{ item.serviceType }}
+                  }
+                  @if (item.printText != '') {
+                    <br>„{{ item.printText }}”
+                  }
+                  @if (item.printImage != '') {
+                    <br><img class="cart-print-image" [src]="item.printImage" alt="Slika za štampu">
+                  }
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ (item.unitPrice + item.additionalPrice) * item.quantity }} RSD</td>
+                <td><button class="danger" (click)="removeItem(item)">Ukloni</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <p class="group-total">Račun štamparije: <strong>{{ group.total }} RSD</strong></p>
+      </section>
+    }
+
+    <p class="grand-total">Ukupno za plaćanje: <strong>{{ total() }} RSD</strong></p>
+    <button (click)="confirmOrder()">
+      {{ user.role == 'company' ? 'Otvori javnu nabavku' : 'Potvrdi kupovinu' }}
+    </button>
+  }
+
+  <a class="back-link" routerLink="/client">Nazad na početnu</a>
+  <p class="message" [class.success]="success">{{ message }}</p>
+
+  @if (success) {
+    @if (user.role == 'company') {
+      <p>Tok licitacije možeš pratiti na stranici <a routerLink="/company/tenders">Javne nabavke</a>.</p>
+    } @else {
+      <p>Porudžbine možeš pratiti u tabeli na stranici <a routerLink="/profile">Moj profil</a>.</p>
+    }
+  }
+</div>

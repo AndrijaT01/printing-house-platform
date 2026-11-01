@@ -1,0 +1,87 @@
+@if (!found) {
+  <p>Proizvod nije pronađen.</p>
+} @else {
+  <div class="details-card">
+    <div class="image-box">
+      @if (selectedImage != '') {
+        <img class="main-product-image" [src]="selectedImage" [alt]="product.name">
+
+        @if (galleryImages.length > 1) {
+          <div class="thumbnails">
+            @for (image of galleryImages; track $index) {
+              <button class="thumbnail-button" [class.active-thumbnail]="selectedImage == image"
+                (click)="selectImage($index)">
+                <img [src]="image" [alt]="product.name + ' slika ' + ($index + 1)">
+              </button>
+            }
+          </div>
+        }
+      } @else {
+        <div class="image-placeholder">Nema slike</div>
+      }
+    </div>
+
+    <div>
+      <h2>{{ product.name }}</h2>
+      <p><strong>Štamparija:</strong> {{ product.printerName }}</p>
+      <p><strong>Grad:</strong> {{ product.city }}</p>
+      <p><strong>Ocene:</strong> 👍 {{ product.likes }} · 👎 {{ product.dislikes }}</p>
+
+      @if (isClient) {
+        <p><strong>Opis:</strong> {{ product.description }}</p>
+        <p><strong>Cena:</strong> {{ product.unitPrice }} RSD po komadu</p>
+        <p><strong>Boje:</strong> {{ product.colors.join(', ') || 'Bela' }}</p>
+
+        <h3>Lokacija štamparije</h3>
+        @if (mapUrl != null) {
+          <iframe class="printer-map" [src]="mapUrl" title="Lokacija štamparije" loading="lazy"></iframe>
+        }
+
+        <h3>Usluge štampe</h3>
+        @if (product.services.length == 0) {
+          <p>Nema dodatnih usluga štampe.</p>
+        } @else {
+          <table>
+            <thead>
+              <tr>
+                <th>Usluga</th>
+                <th>Dodatna cena</th>
+                <th>Maksimalne dimenzije</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (service of product.services; track service.serviceId) {
+                <tr>
+                  <td>{{ service.type }}</td>
+                  <td>{{ service.additionalPrice }} RSD</td>
+                  <td>{{ service.maxWidth }} × {{ service.maxHeight }} mm</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        <p class="order-action">
+          <a class="order-link" [routerLink]="['/prepare-product', product._id]">Pripremi i dodaj u korpu</a>
+        </p>
+
+        <div class="comments-section">
+          <h3>Poslednji komentari</h3>
+          @if (lastComments().length == 0) {
+            <p>Još nema komentara za ovaj proizvod.</p>
+          } @else {
+            @for (comment of lastComments(); track comment.date) {
+              <div class="comment" [class.my-comment]="isMyComment(comment.clientId)">
+                <strong>{{ comment.username }}</strong>
+                <small>{{ comment.date | date:'dd.MM.yyyy. HH:mm' }}</small>
+                <p>{{ comment.text }}</p>
+              </div>
+            }
+          }
+        </div>
+      }
+
+      <p class="back"><a routerLink="/">Nazad na početnu</a></p>
+    </div>
+  </div>
+}

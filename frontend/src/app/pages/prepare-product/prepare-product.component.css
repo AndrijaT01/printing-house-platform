@@ -1,0 +1,73 @@
+.prepare-card {
+  max-width: 680px;
+}
+
+.total {
+  margin: 22px 0;
+  font-size: 18px;
+}
+
+.back-link {
+  margin-left: 16px;
+}
+
+.product-preview {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  min-height: 260px;
+  margin: 20px auto 6px;
+  overflow: hidden;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: #f2f5f7;
+}
+
+.base-image {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+}
+
+.preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  color: #687581;
+}
+
+.print-image-overlay {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 34%;
+  max-height: 34%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+.print-text-overlay {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 24%;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #111;
+  text-align: center;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.preview-note {
+  text-align: center;
+  color: #687581;
+  font-size: 13px;
+}
+
+.secondary-button {
+  margin-left: 10px;
+  background: #687581;
+}

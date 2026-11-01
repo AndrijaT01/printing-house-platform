@@ -1,0 +1,107 @@
+<section class="hero">
+  <div>
+    <h1>Printing House</h1>
+    <p>Pronađite štampariju, proizvod i odgovarajuću uslugu štampe.</p>
+  </div>
+  <div class="printer-count">
+    <strong>{{ printerCount }}</strong>
+    <span>aktivnih štamparija</span>
+  </div>
+</section>
+
+<section>
+  <h2>TOP 5 proizvoda</h2>
+
+  @if (topProducts.length == 0) {
+    <p>Trenutno nema proizvoda na stanju.</p>
+  } @else {
+    <div class="top-products">
+      @for (product of topProducts; track product._id) {
+        <article class="product-card">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.printerName }} · {{ product.city }}</p>
+          <p>👍 {{ product.likes }} · 👎 {{ product.dislikes }}</p>
+          <a [routerLink]="['/product', product._id]">Detalji</a>
+        </article>
+      }
+    </div>
+  }
+</section>
+
+<div class="content-grid">
+  <section class="card login-card">
+    <h2>Prijava korisnika</h2>
+
+    <div class="form-row">
+      <label for="username">Korisničko ime</label>
+      <input id="username" type="text" [(ngModel)]="username">
+    </div>
+
+    <div class="form-row">
+      <label for="password">Lozinka</label>
+      <input id="password" type="password" [(ngModel)]="password">
+    </div>
+
+    <button (click)="login()">Prijavi se</button>
+
+    <p><a routerLink="/forgot-password">Zaboravljena lozinka?</a></p>
+
+    <p class="message">{{ message }}</p>
+
+    <p>Nemaš nalog? <a routerLink="/register">Registruj se</a></p>
+  </section>
+
+  <section class="search-panel">
+    <h2>Pretraga proizvoda</h2>
+
+    <div class="search-form">
+      <div class="form-row">
+        <label for="searchName">Naziv proizvoda</label>
+        <input id="searchName" type="text" [(ngModel)]="searchName">
+      </div>
+
+      <div class="form-row">
+        <label for="searchCategory">Kategorija</label>
+        <select id="searchCategory" [(ngModel)]="searchCategory">
+          <option value="">Sve kategorije</option>
+          @for (category of categories; track category) {
+            <option [value]="category">{{ category }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <button (click)="search()">Pretraži</button>
+  </section>
+</div>
+
+<section class="results">
+  <h2>Rezultati pretrage</h2>
+
+  @if (products.length == 0) {
+    <p>Nema proizvoda koji odgovaraju pretrazi.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th class="sortable" (click)="sortByName()">Naziv ↕</th>
+          <th>Kategorija</th>
+          <th>Štamparija</th>
+          <th>Grad</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products; track product._id) {
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.printerName }}</td>
+            <td>{{ product.city }}</td>
+            <td><a [routerLink]="['/product', product._id]">DETALJI</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

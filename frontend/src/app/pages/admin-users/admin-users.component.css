@@ -1,0 +1,31 @@
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.actions button {
+  margin: 3px;
+}
+
+.users-title {
+  margin-top: 42px;
+}
+
+.edit-link {
+  display: inline-block;
+  margin: 3px;
+  padding: 9px 14px;
+  border-radius: 4px;
+  background: #1967a3;
+  color: white;
+  text-decoration: none;
+}
+
+.categories-link {
+  margin-right: 14px;
+}

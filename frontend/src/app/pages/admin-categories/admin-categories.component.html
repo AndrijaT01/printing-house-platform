@@ -1,0 +1,54 @@
+<div class="page-heading">
+  <div>
+    <h2>Kategorije proizvoda</h2>
+    <p>Dodavanje kategorija i njihovih potkategorija.</p>
+  </div>
+  <a routerLink="/admin/users">Korisnici</a>
+</div>
+
+<div class="forms-grid">
+  <div class="card">
+    <h3>Nova kategorija</h3>
+    <div class="form-row">
+      <label for="categoryName">Naziv</label>
+      <input id="categoryName" type="text" [(ngModel)]="categoryName">
+    </div>
+    <button (click)="addCategory()">Dodaj kategoriju</button>
+  </div>
+
+  <div class="card">
+    <h3>Nova potkategorija</h3>
+    <div class="form-row">
+      <label for="category">Kategorija</label>
+      <select id="category" [(ngModel)]="selectedCategoryId">
+        @for (category of categories; track category._id) {
+          <option [value]="category._id">{{ category.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="subcategoryName">Naziv potkategorije</label>
+      <input id="subcategoryName" type="text" [(ngModel)]="subcategoryName">
+    </div>
+    <button (click)="addSubcategory()">Dodaj potkategoriju</button>
+  </div>
+</div>
+
+<p class="message">{{ message }}</p>
+
+<div class="category-list">
+  @for (category of categories; track category._id) {
+    <article>
+      <h3>{{ category.name }}</h3>
+      @if (category.subcategories.length == 0) {
+        <p>Nema potkategorija.</p>
+      } @else {
+        <ul>
+          @for (subcategory of category.subcategories; track subcategory) {
+            <li>{{ subcategory }}</li>
+          }
+        </ul>
+      }
+    </article>
+  }
+</div>

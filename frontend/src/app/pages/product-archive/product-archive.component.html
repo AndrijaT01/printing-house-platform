@@ -1,0 +1,70 @@
+<div class="archive-page">
+  <div class="page-heading">
+    <div>
+      <h2>Arhiva proizvoda</h2>
+      <p>Isporučeni i primljeni proizvodi iz tvojih porudžbina.</p>
+    </div>
+
+    <div class="sort-box">
+      <label for="sort">Sortiranje</label>
+      <select id="sort" [(ngModel)]="sortOption">
+        <option value="date">Datum poručivanja</option>
+        <option value="name">Naziv proizvoda</option>
+        <option value="quantity">Količina</option>
+        <option value="printer">Štamparija</option>
+      </select>
+    </div>
+  </div>
+
+  @if (items.length == 0) {
+    <p>Arhiva je prazna.</p>
+  } @else {
+    @for (group of orderGroups(); track group.orderId) {
+      <section class="order-group">
+        <div class="order-heading">
+          <div>
+            <h3>Faktura {{ group.invoiceId }}</h3>
+            <p>{{ group.printerName }}, {{ group.city }} · {{ group.orderDate | date:'dd.MM.yyyy. HH:mm' }}</p>
+          </div>
+          <span class="status">{{ group.status == 'received' ? 'Primljeno' : 'Isporučeno' }}</span>
+        </div>
+
+        @if (group.status == 'delivered') {
+          <p class="delivery-note">Potvrda prijema odnosi se na sve proizvode sa ove fakture.</p>
+          <button (click)="confirmReceived(group.items[0])">Potvrdi prijem cele porudžbine</button>
+        }
+
+        <div class="products-list">
+          @for (item of group.items; track $index) {
+            <article class="archive-card">
+              <div class="product-data">
+                <div>
+                  <h4><a [routerLink]="['/product', item.productId]">{{ item.productName }}</a></h4>
+                  <p><strong>Količina:</strong> {{ item.quantity }}</p>
+                </div>
+              </div>
+
+              @if (group.status == 'received') {
+                <div class="rating-actions">
+                  <button class="like-button" [class.selected-like]="item.userRating == 'like'"
+                    (click)="rate(item, 'like')">👍 Sviđa mi se</button>
+                  <button class="dislike-button" [class.selected-dislike]="item.userRating == 'dislike'"
+                    (click)="rate(item, 'dislike')">👎 Ne sviđa mi se</button>
+                </div>
+
+                <div class="comment-form">
+                  <textarea rows="2" maxlength="500" [(ngModel)]="comments[item.productId]"
+                    placeholder="Ostavi komentar za proizvod"></textarea>
+                  <button (click)="addComment(item)">Dodaj komentar</button>
+                </div>
+              }
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+
+  <a routerLink="/client">Nazad</a>
+  <p class="message" [class.success]="success">{{ message }}</p>
+</div>

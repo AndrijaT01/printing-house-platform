@@ -1,0 +1,90 @@
+<div class="card">
+  <h2>Registracija</h2>
+
+  <div class="form-row">
+    <label for="role">Tip korisnika</label>
+    <select id="role" [(ngModel)]="user.role">
+      <option value="person">Fizičko lice</option>
+      <option value="company">Pravno lice</option>
+      <option value="printer">Štamparija</option>
+    </select>
+  </div>
+
+  <div class="two-columns">
+    <div class="form-row">
+      <label for="username">Korisničko ime</label>
+      <input id="username" type="text" [(ngModel)]="user.username">
+    </div>
+
+    <div class="form-row">
+      <label for="email">Email</label>
+      <input id="email" type="email" [(ngModel)]="user.email">
+    </div>
+
+    <div class="form-row">
+      <label for="password">Lozinka</label>
+      <input id="password" type="password" [(ngModel)]="user.password">
+    </div>
+
+    <div class="form-row">
+      <label for="repeatedPassword">Ponovljena lozinka</label>
+      <input id="repeatedPassword" type="password" [(ngModel)]="repeatedPassword">
+    </div>
+
+    <div class="form-row">
+      <label for="firstName">Ime / odgovorno lice</label>
+      <input id="firstName" type="text" [(ngModel)]="user.firstName">
+    </div>
+
+    <div class="form-row">
+      <label for="lastName">Prezime / odgovorno lice</label>
+      <input id="lastName" type="text" [(ngModel)]="user.lastName">
+    </div>
+
+    <div class="form-row">
+      <label for="phone">Telefon</label>
+      <input id="phone" type="text" [(ngModel)]="user.phone">
+    </div>
+
+    <div class="form-row">
+      <label for="image">Profilna slika</label>
+      <input id="image" type="file" accept="image/jpeg,image/png,image/gif" (change)="imageSelected($event)">
+    </div>
+  </div>
+
+  @if (user.role == 'company' || user.role == 'printer') {
+    <h3>Podaci o instituciji</h3>
+
+    <div class="two-columns">
+      <div class="form-row">
+        <label for="companyName">Naziv institucije</label>
+        <input id="companyName" type="text" [(ngModel)]="user.companyName">
+      </div>
+
+      <div class="form-row">
+        <label for="city">Grad</label>
+        <input id="city" type="text" [(ngModel)]="user.city">
+      </div>
+
+      <div class="form-row">
+        <label for="address">Adresa sedišta</label>
+        <input id="address" type="text" [(ngModel)]="user.address">
+      </div>
+
+      <div class="form-row">
+        <label for="registrationNumber">Matični broj</label>
+        <input id="registrationNumber" type="text" [(ngModel)]="user.registrationNumber">
+      </div>
+
+      <div class="form-row">
+        <label for="taxNumber">PIB</label>
+        <input id="taxNumber" type="text" [(ngModel)]="user.taxNumber">
+      </div>
+    </div>
+  }
+
+  <button (click)="register()">Pošalji zahtev</button>
+
+  <p class="message" [class.success]="registrationSuccessful">{{ message }}</p>
+  <p><a routerLink="/">Nazad na prijavu</a></p>
+</div>

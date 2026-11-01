@@ -1,0 +1,74 @@
+BIBLIOTEKE I POTREBNI PROGRAMI
+==============================
+
+Biblioteke nisu uključene u arhivu. Instaliraju se komandom `npm install` u
+frontend i backend folderu. Tačne verzije i zavisnosti nalaze se u odgovarajućim
+package.json i package-lock.json fajlovima.
+
+Potrebni programi
+-----------------
+
+1. Node.js 22.x i npm
+   https://nodejs.org/en/download
+
+2. MongoDB Community Server 8.x
+   https://www.mongodb.com/try/download/community
+
+3. MongoDB Compass, za uvoz priloženih JSON kolekcija
+   https://www.mongodb.com/try/download/compass
+
+Frontend - direktne zavisnosti
+------------------------------
+
+- Angular 20.3
+  @angular/common, @angular/compiler, @angular/core, @angular/forms,
+  @angular/platform-browser i @angular/router
+  https://angular.dev/
+
+- Angular CLI 20.3.6
+  https://www.npmjs.com/package/@angular/cli
+
+- Angular build alati 20.3.6
+  https://www.npmjs.com/package/@angular/build
+
+- RxJS 7.8
+  https://www.npmjs.com/package/rxjs
+
+- TypeScript 5.9
+  https://www.npmjs.com/package/typescript
+
+- tslib 2.3
+  https://www.npmjs.com/package/tslib
+
+- zone.js 0.15
+  https://www.npmjs.com/package/zone.js
+
+Frontend sadrži i Jasmine/Karma razvojne zavisnosti za testiranje. Njihove tačne
+verzije navedene su u frontend/package.json i automatski se instaliraju komandom
+`npm install`.
+
+Backend - direktne zavisnosti
+-----------------------------
+
+- Express 5.2
+  https://www.npmjs.com/package/express
+
+- Mongoose 9.1
+  https://www.npmjs.com/package/mongoose
+
+- MongoDB Node.js Driver 7.0
+  https://www.npmjs.com/package/mongodb
+
+- CORS 2.8
+  https://www.npmjs.com/package/cors
+
+- TypeScript 5.9
+  https://www.npmjs.com/package/typescript
+
+- TypeScript definicije: @types/node, @types/express i @types/cors
+  https://www.npmjs.com/package/@types/node
+  https://www.npmjs.com/package/@types/express
+  https://www.npmjs.com/package/@types/cors
+
+Nijedna od navedenih biblioteka, kao ni node_modules ili kompajlirani dist
+folderi, nije zapakovana u projekat.

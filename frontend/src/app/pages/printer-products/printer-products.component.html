@@ -1,0 +1,170 @@
+<div class="page-heading">
+  <div>
+    <h2>Proizvodi i usluge</h2>
+    <p>Dodavanje ponude štamparije i ažuriranje lagera.</p>
+  </div>
+  <a routerLink="/printer">Početna štamparije</a>
+</div>
+
+<div class="card import-card">
+  <h3>Dodavanje proizvoda iz JSON fajla</h3>
+  <p>Podržan je originalni format iz Priloga 1 projektnog zadatka.</p>
+  <input type="file" accept="application/json,.json,.txt" (change)="jsonFileSelected($event)">
+  @if (jsonFileName != '') {
+    <p>Izabran fajl: <strong>{{ jsonFileName }}</strong></p>
+  }
+  <button (click)="importJson()">Uvezi proizvode</button>
+</div>
+
+@if (categories.length == 0) {
+  <div class="notice">
+    Administrator prvo mora dodati kategorije i potkategorije.
+  </div>
+} @else {
+  <div class="card product-form">
+    <h3>Novi proizvod</h3>
+
+    <div class="form-grid">
+      <div class="form-row">
+        <label for="code">Šifra</label>
+        <input id="code" type="text" [(ngModel)]="product.code">
+      </div>
+
+      <div class="form-row">
+        <label for="name">Naziv</label>
+        <input id="name" type="text" [(ngModel)]="product.name">
+      </div>
+
+      <div class="form-row full-width">
+        <label for="description">Opis</label>
+        <textarea id="description" [(ngModel)]="product.description"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="category">Kategorija</label>
+        <select id="category" [(ngModel)]="product.category" (change)="categoryChanged()">
+          @for (category of categories; track category._id) {
+            <option [value]="category.name">{{ category.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="subcategory">Potkategorija</label>
+        <select id="subcategory" [(ngModel)]="product.subcategory">
+          @for (subcategory of getSubcategories(); track subcategory) {
+            <option [value]="subcategory">{{ subcategory }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="unitPrice">Jedinična cena (RSD)</label>
+        <input id="unitPrice" type="number" min="1" [(ngModel)]="product.unitPrice">
+      </div>
+
+      <div class="form-row">
+        <label for="stock">Količina na lageru</label>
+        <input id="stock" type="number" min="0" [(ngModel)]="product.stock">
+      </div>
+
+      <div class="form-row">
+        <label for="colors">Boje, odvojene zarezom</label>
+        <input id="colors" type="text" [(ngModel)]="colorsText" placeholder="Bela, Crna, Plava">
+      </div>
+
+      <div class="form-row">
+        <label for="image">Slika proizvoda</label>
+        <input id="image" type="file" accept="image/jpeg,image/png,image/gif" (change)="imageSelected($event)">
+      </div>
+
+      <div class="form-row">
+        <label for="additionalImages">Dodatne slike (najviše 3)</label>
+        <input id="additionalImages" type="file" multiple accept="image/jpeg,image/png,image/gif"
+          (change)="additionalImagesSelected($event)">
+      </div>
+    </div>
+
+    <h3>Usluge štampe</h3>
+
+    <div class="service-form">
+      <input type="text" [(ngModel)]="newService.serviceId" placeholder="ID usluge">
+      <input type="text" [(ngModel)]="newService.type" placeholder="Tip štampe">
+      <input type="number" min="0" [(ngModel)]="newService.additionalPrice" placeholder="Dodatna cena">
+      <input type="number" min="1" [(ngModel)]="newService.maxWidth" placeholder="Max širina mm">
+      <input type="number" min="1" [(ngModel)]="newService.maxHeight" placeholder="Max visina mm">
+      <button (click)="addService()">Dodaj uslugu</button>
+    </div>
+
+    @if (product.services.length > 0) {
+      <table class="services-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tip</th>
+            <th>Cena</th>
+            <th>Dimenzije</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (service of product.services; track $index) {
+            <tr>
+              <td>{{ service.serviceId }}</td>
+              <td>{{ service.type }}</td>
+              <td>{{ service.additionalPrice }} RSD</td>
+              <td>{{ service.maxWidth }} × {{ service.maxHeight }} mm</td>
+              <td><button class="danger" (click)="removeService($index)">Ukloni</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+    <button class="save-product" (click)="addProduct()">Sačuvaj proizvod</button>
+  </div>
+}
+
+<p class="message" [class.success]="success">{{ message }}</p>
+
+<h2>Moji proizvodi</h2>
+
+@if (products.length == 0) {
+  <p>Niste još dodali proizvode.</p>
+} @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Šifra</th>
+        <th>Naziv</th>
+        <th>Kategorija</th>
+        <th>Cena</th>
+        <th>Količina</th>
+        <th>Slika</th>
+        <th>Dodatne slike</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of products; track item._id) {
+        <tr>
+          <td>{{ item.code }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }} / {{ item.subcategory }}</td>
+          <td>{{ item.unitPrice }} RSD</td>
+          <td><input class="stock-input" type="number" min="0" [(ngModel)]="item.stock"></td>
+          <td>
+            <input type="file" accept="image/jpeg,image/png,image/gif"
+              (change)="productImageSelected($event, item)">
+          </td>
+          <td>
+            <small>Trenutno: {{ item.additionalImages.length }}</small><br>
+            <input type="file" multiple accept="image/jpeg,image/png,image/gif"
+              (change)="productAdditionalImagesSelected($event, item)">
+          </td>
+          <td><button (click)="updateStock(item)">Ažuriraj</button></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

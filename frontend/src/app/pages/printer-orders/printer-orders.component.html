@@ -1,0 +1,44 @@
+<div class="orders-page">
+  <h2>Porudžbine štamparije</h2>
+
+  @if (orders.length == 0) {
+    <p>Trenutno nema porudžbina.</p>
+  } @else {
+    @for (order of orders; track order._id) {
+      <section class="order-card">
+        <div class="order-heading">
+          <div>
+            <strong>{{ order.invoiceId }}</strong><br>
+            Kupac: {{ order.clientUsername }} · {{ order.orderDate | date:'dd.MM.yyyy. HH:mm' }}
+          </div>
+          <span class="status">{{ statusName(order.status) }}</span>
+        </div>
+
+        <ul>
+          @for (item of order.items; track item.productId) {
+            <li>
+              {{ item.productName }} — {{ item.quantity }} kom, {{ item.color }}
+              @if (item.serviceType != '') { · {{ item.serviceType }} }
+              @if (item.printText != '') { · tekst: „{{ item.printText }}” }
+              @if (item.printImage != '') {
+                · priložena slika za štampu
+              }
+            </li>
+          }
+        </ul>
+
+        <p><strong>Ukupno: {{ order.totalAmount }} RSD</strong></p>
+
+        @if (order.status == 'ordered') {
+          <button (click)="changeStatus(order, 'printing')">Počni štampu</button>
+        }
+        @if (order.status == 'printing') {
+          <button (click)="changeStatus(order, 'delivered')">Označi kao isporučeno</button>
+        }
+      </section>
+    }
+  }
+
+  <a routerLink="/printer">Nazad</a>
+  <p class="message">{{ message }}</p>
+</div>

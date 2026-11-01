@@ -1,0 +1,43 @@
+.cart-page {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.printer-group {
+  margin-bottom: 28px;
+  padding: 20px;
+  border: 1px solid #d9e0e6;
+  border-radius: 8px;
+  background: white;
+  overflow-x: auto;
+}
+
+.group-total, .grand-total {
+  text-align: right;
+}
+
+.grand-total {
+  font-size: 20px;
+}
+
+.danger {
+  background: #a43b3b;
+}
+
+.back-link {
+  margin-left: 16px;
+}
+
+.company-notice {
+  padding: 14px;
+  border-left: 4px solid #d39b2c;
+  background: #fff6df;
+}
+
+.cart-print-image {
+  width: 55px;
+  height: 55px;
+  margin-top: 5px;
+  object-fit: contain;
+  border: 1px solid #d9e0e6;
+}
